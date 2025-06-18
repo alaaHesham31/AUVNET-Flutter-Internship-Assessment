@@ -50,27 +50,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: ListView(
+    final user = context.watch<HomeBloc>().state.userProfile;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+       appBar:  CustomAppbar(
+          name: user?.name ?? 'Hepa',
+          address: user?.address ?? 'Al Satwa, 81A Street',
+        ),
+        body: ListView(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Gradient AppBar
-                BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    final user = state.userProfile;
-
-                    return CustomAppbar(
-                      name: user?.name ?? 'User',
-                      address: user?.address ?? 'Your Address',
-                    );
-                  },
-                ),
+        
                 const SizedBox(height: 20),
-
+        
                 // Services Section
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -79,9 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: AppStyle.bold20Black,
                   ),
                 ),
-
+        
                 const SizedBox(height: 12),
-
+        
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -105,14 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-
+        
                 const SizedBox(height: 24),
-
+        
                 // Promo Box
                 PromoCodeBox(),
-
+        
                 const SizedBox(height: 14),
-
+        
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -120,15 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: AppStyle.bold20Black,
                   ),
                 ),
-
+        
                 const SizedBox(height: 12),
-
+        
                 BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
                     if (state.shortcuts.isEmpty) {
                       return const SizedBox(height: 0);
                     }
-
+        
                     return SizedBox(
                       height: 120,
                       child: ListView.separated(
@@ -147,10 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-
-
+        
+        
                 const SizedBox(height: 16),
-
+        
                 // Promo Carousel
                 SizedBox(
                   height: 180,
@@ -171,9 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-
+        
                 const SizedBox(height: 12),
-
+        
                 // Page Indicator
                 Center(
                   child: SmoothPageIndicator(
@@ -186,14 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-
+        
                 const SizedBox(height: 24),
                 BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
                     if (state.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
-
+        
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
@@ -222,30 +218,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-
+        
               ],
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        selectedItemColor: Colors.purple,
-        unselectedItemColor: Colors.black54,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          _buildBarItem(0, 'Home', AppImages.homeIcon),
-          _buildBarItem(1, 'Categories', AppImages.categoriesIcon),
-          _buildBarItem(2, 'Deliver', AppImages.deliverIcon),
-          _buildBarItem(3, 'Cart', AppImages.cartIcon),
-          _buildBarItem(4, 'Profile', AppImages.profileIcon),
-        ],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          selectedItemColor: Colors.purple,
+          unselectedItemColor: Colors.black54,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            _buildBarItem(0, 'Home', AppImages.homeIcon),
+            _buildBarItem(1, 'Categories', AppImages.categoriesIcon),
+            _buildBarItem(2, 'Deliver', AppImages.deliverIcon),
+            _buildBarItem(3, 'Cart', AppImages.cartIcon),
+            _buildBarItem(4, 'Profile', AppImages.profileIcon),
+          ],
+        ),
       ),
     );
   }
